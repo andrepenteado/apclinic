@@ -1,21 +1,32 @@
 package com.github.andrepenteado.apclinic;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.NoOpPasswordEncoder;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
+
+import javax.sql.DataSource;
 
 @EnableWebSecurity
 public class ApClinicSecurity extends WebSecurityConfigurerAdapter {
 
+    @Autowired
+    private DataSource dataSource;
+
+    private final String userQuery = "SELECT Login, Senha, 1 FROM Usuario WHERE Login = ?";
+
+    private final String roleQuery = "SELECT u.Login, p.Perfil FROM Perfil_Usuario p, Usuario u WHERE u.Id = p.Id_Usuario AND u.Login = ?";
+
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-        auth.inMemoryAuthentication().passwordEncoder(NoOpPasswordEncoder.getInstance())
-                        .withUser("func").password("func").roles(KGlobal.K_PERFIL_FUNCIONARIO)
-                    .and()
-                        .withUser("cliente").password("cliente").roles(KGlobal.K_PERFIL_CLIENTE);
+        auth.jdbcAuthentication().dataSource(dataSource)
+                .usersByUsernameQuery(userQuery)
+                .authoritiesByUsernameQuery(roleQuery)
+                .passwordEncoder(new BCryptPasswordEncoder());
     }
 
     @Override

@@ -16,6 +16,8 @@
       <a class="dropdown-item">Perfil: <strong><sec:authentication property="authorities"/></strong></a>
       <a class="dropdown-item">IP: <strong><sec:authentication property="details.remoteAddress"/></strong></a>
       <div class="dropdown-divider"></div>
+      <a class="dropdown-item" href="<c:url value="/usuarios/meusdados"/>"><i class="fas fa-user-edit"></i> Meus Dados</a>
+      <div class="dropdown-divider"></div>
       <a class="dropdown-item" href="<c:url value="/logout"/>"><i class="fas fa-door-open"></i> Sair</a>
     </div>
   </li>

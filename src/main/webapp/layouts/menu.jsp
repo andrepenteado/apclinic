@@ -12,7 +12,7 @@
       <i class="fas fa-desktop"></i> Configurações
     </a>
     <div class="dropdown-menu">
-      <a class="dropdown-item" href="<c:url value="/usuarios"/>"><i class="fas fa-user-friends"></i> Usuários do Sistema</a>
+      <a class="dropdown-item" href="<c:url value="/usuarios"/>"><i class="fas fa-users"></i> Usuários do Sistema</a>
     </div>
   </li>
 </sec:authorize>

@@ -1,20 +1,28 @@
+DROP TABLE IF EXISTS Usuario CASCADE;
 CREATE TABLE Usuario
 (
-  Id    SERIAL,
-  Login VARCHAR(50)  NOT NULL,
-  Senha VARCHAR(100) NOT NULL,
-  Nome  VARCHAR(100) NOT NULL,
-  CONSTRAINT pk_usuario PRIMARY KEY (Id)
+  Id    BIGSERIAL,
+  Login VARCHAR    NOT NULL,
+  Senha VARCHAR    NOT NULL,
+  Nome  VARCHAR    NOT NULL,
+  CONSTRAINT PK_Usuario       PRIMARY KEY (Id),
+  CONSTRAINT UN_Usuario_Login UNIQUE (Login)
 );
 
+--------------------------------------------------------
+
+DROP TABLE IF EXISTS Perfil_Usuario CASCADE;
 CREATE TABLE Perfil_Usuario
 (
-  Id         SERIAL,
-  Id_Usuario INTEGER     NOT NULL,
-  Perfil     VARCHAR(50) NOT NULL,
-  CONSTRAINT PK_Perfil_Usuario PRIMARY KEY (Id),
-  FOREIGN KEY (Id_Usuario) REFERENCES Usuario (Id) ON UPDATE CASCADE ON DELETE CASCADE
+  Id         BIGSERIAL,
+  Id_Usuario BIGINT     NOT NULL,
+  Perfil     VARCHAR    NOT NULL,
+  CONSTRAINT PK_Perfil_Usuario        PRIMARY KEY (Id),
+  CONSTRAINT UN_PerfilUsuario_PerfilIdUsuario UNIQUE (Perfil, Id_Usuario),
+  CONSTRAINT FK_PerfilUsuario_Usuario FOREIGN KEY (Id_Usuario) REFERENCES Usuario (Id) ON UPDATE RESTRICT ON DELETE RESTRICT
 );
+
+---------------------------------------------------------
 
 INSERT INTO Usuario (Login, Senha, Nome) VALUES ('admin', '$2a$10$YhKo.xR5mshUQqu4NOS/XuWQKKbEVAokBjHRhAAQI25dd3evoiGIi', 'Administrador');
 INSERT INTO Perfil_Usuario (Id_Usuario, Perfil) VALUES (CURRVAL('Usuario_Id_Seq'), 'PERFIL_ADMINISTRADOR');

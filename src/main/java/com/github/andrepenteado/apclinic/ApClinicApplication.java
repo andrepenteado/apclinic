@@ -1,5 +1,6 @@
 package com.github.andrepenteado.apclinic;
 
+import ch.qos.logback.classic.helpers.MDCInsertingServletFilter;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.builder.SpringApplicationBuilder;
@@ -28,4 +29,8 @@ public class ApClinicApplication extends SpringBootServletInitializer {
         return new FixedLocaleResolver(new Locale("pt", "BR"));
     }
 
+    @Bean
+    public MDCInsertingServletFilter mdcInsertingServletFilter() {
+        return new MDCInsertingServletFilter();
+    }
 }

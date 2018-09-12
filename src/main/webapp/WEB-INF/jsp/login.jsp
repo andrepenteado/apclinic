@@ -41,20 +41,17 @@
           <hr>
           <div class="form-group">
             <div class="input-group input-group-lg">
-              <input type="text" class="form-control border-right-0" placeholder="Nome de usuário" name="username" id="username"/>
-              <div class="invalid-feedback">
-                Please choose a username.
-              </div>
+              <input type="text" class="form-control" placeholder="Nome de usuário" name="username" id="username"/>
               <div class="input-group-prepend">
-                <span class="input-group-text bg-white border-left-0"><i class="far fa-envelope form-control-feedback"></i></span>
+                <span class="input-group-text" style="width: 50px;"><i class="fas fa-user-circle"></i></span>
               </div>
             </div>
           </div>
           <div class="form-group">
             <div class="input-group input-group-lg">
-              <input type="password" class="form-control border-right-0" placeholder="Senha" name="password" id="password"/>
+              <input type="password" class="form-control" placeholder="Senha" name="password" id="password"/>
               <div class="input-group-prepend">
-                <span class="input-group-text bg-white border-left-0"><i class="fas fa-lock form-control-feedback" ></i></span>
+                <span class="input-group-text" style="width: 50px;"><i class="fas fa-lock" ></i></span>
               </div>
             </div>
           </div>

@@ -11,6 +11,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
+import javax.validation.constraints.NotBlank;
 
 @Entity
 @Table(name = "usuario")
@@ -25,12 +26,15 @@ public class Usuario {
     @Column(name = "id", nullable = false)
     private Long id;
 
+    @NotBlank
     @Column(name = "login", unique = true)
     private String login;
 
+    @NotBlank
     @Column(name = "senha")
     private String senha;
 
+    @NotBlank
     @Column(name = "nome")
     private String nome;
 }

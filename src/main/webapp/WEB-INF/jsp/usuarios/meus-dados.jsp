@@ -22,8 +22,8 @@
       $(document).ready(function() {
           var form = $("#usuario").validate({
               rules : {
-                  txt_confirme_senha : { equalTo : "#txt_nova_senha" }/*,
-                  nome : { required : true }*/
+                  txt_confirme_senha : { equalTo : "#txt_nova_senha" },
+                  nome : { required : true }
               }
           });
           $("#txt_nova_senha").focus();

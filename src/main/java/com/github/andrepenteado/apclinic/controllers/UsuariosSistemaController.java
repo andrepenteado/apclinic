@@ -7,6 +7,8 @@ import javax.validation.Valid;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.domain.Sort.Direction;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -30,7 +32,8 @@ public class UsuariosSistemaController {
     private MessageSource config;
 
     @RequestMapping
-    public String pesquisar() {
+    public String pesquisar(Model model) {
+        model.addAttribute("listagemUsuarios", usuarioRepository.findAll(new Sort(Direction.ASC, "nome")));
         return "usuarios/pesquisar";
     }
 

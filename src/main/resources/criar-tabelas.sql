@@ -3,7 +3,7 @@ CREATE TABLE Usuario
 (
   Id    BIGSERIAL,
   Login VARCHAR    NOT NULL,
-  Senha VARCHAR    NOT NULL,
+  Senha VARCHAR        NULL,
   Nome  VARCHAR    NOT NULL,
   CONSTRAINT PK_Usuario       PRIMARY KEY (Id),
   CONSTRAINT UN_Usuario_Login UNIQUE (Login)

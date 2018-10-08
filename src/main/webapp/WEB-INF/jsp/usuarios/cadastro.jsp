@@ -34,7 +34,6 @@
 
   <form:form action="${actionGravar}" modelAttribute="usuario">
     <form:hidden path="id"/>
-    <form:hidden path="senha"/>
     <div class="col-12 col-md-6 offset-md-3">
       <div class="card">
         <div class="card-body border border-primary rounded shadow-lg">

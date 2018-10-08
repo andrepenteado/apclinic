@@ -80,6 +80,6 @@ public class UsuariosSistemaController {
             log.error("Erro de processamento", ex);
             model.addAttribute("mensagemErro", config.getMessage("erroProcessamento", null, null));
         }
-        return "usuarios/cadastro";
+        return cadastroUsuario(model);
     }
 }

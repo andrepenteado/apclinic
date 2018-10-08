@@ -40,7 +40,6 @@ public class Usuario {
     @Column(name = "login", unique = true)
     private String login;
 
-    @NotBlank
     @Column(name = "senha")
     private String senha;
 

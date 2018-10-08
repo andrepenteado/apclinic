@@ -1,8 +1,9 @@
 package com.github.andrepenteado.apclinic.controllers;
 
 import com.github.andrepenteado.apclinic.entities.Usuario;
+import com.github.andrepenteado.apclinic.entities.enums.Perfil;
 import com.github.andrepenteado.apclinic.repositories.UsuarioRepository;
-import java.util.Locale;
+
 import javax.validation.Valid;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,6 +17,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -37,15 +39,33 @@ public class UsuariosSistemaController {
         return "usuarios/pesquisar";
     }
 
+    @RequestMapping("/incluir")
+    public String incluirUsuario(Model model) {
+        model.addAttribute("usuario", new Usuario());
+        return cadastroUsuario(model);
+    }
+
+    @RequestMapping("/editar/{id}")
+    public String editarUsuario(Model model, @PathVariable Long id) {
+        Usuario usuario = usuarioRepository.findById(id).get();
+        model.addAttribute("usuario", usuario);
+        return cadastroUsuario(model);
+    }
+
     @RequestMapping("/meusdados")
     public String meusDados(@AuthenticationPrincipal User user, Model model) {
         Usuario usuario = usuarioRepository.findUsuarioByLogin(user.getUsername());
         model.addAttribute("usuario", usuario);
-        return "usuarios/meus-dados";
+        return cadastroUsuario(model);
     }
 
-    @PostMapping("/meusdados/gravar")
-    public String gravarMeusDados(Model model, @ModelAttribute("usuario") @Valid Usuario usuario, BindingResult result,
+    public String cadastroUsuario(Model model) {
+        model.addAttribute("listaPerfis", Perfil.values());
+        return "usuarios/cadastro";
+    }
+
+    @PostMapping("/gravar")
+    public String gravar(Model model, @ModelAttribute("usuario") @Valid Usuario usuario, BindingResult result,
                     @RequestParam(value = "txt_nova_senha") String novaSenha) {
         try {
             if (!result.hasErrors()) {
@@ -60,6 +80,6 @@ public class UsuariosSistemaController {
             log.error("Erro de processamento", ex);
             model.addAttribute("mensagemErro", config.getMessage("erroProcessamento", null, null));
         }
-        return "usuarios/meus-dados";
+        return "usuarios/cadastro";
     }
 }

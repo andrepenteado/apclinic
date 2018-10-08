@@ -10,39 +10,40 @@
 
 <dandelion:bundle includes="font-awesome5,jquery.validation"/>
 
-<c:set var="actionGravar"><c:url value="/usuarios/meusdados/gravar"/></c:set>
+<c:set var="actionGravar"><c:url value="/usuarios/gravar"/></c:set>
 
 <html>
 <head>
-  <meta name="header" content="Meus Dados"/>
-  <title>Meus Dados</title>
+  <title>Cadastro de Usuário</title>
+  <meta name="header" content="Cadastro"/>
+  <meta name="previouspage" content="<li class='breadcrumb-item'><a href='<c:url value="/usuarios"/>'>Usuários</a></li>" />
 </head>
 <body>
   <script type="text/javascript">
       $(document).ready(function() {
           var form = $("#usuario").validate({
               rules : {
+                  login : { required : true },
                   txt_confirme_senha : { equalTo : "#txt_nova_senha" },
                   nome : { required : true }
               }
           });
-          $("#txt_nova_senha").focus();
+          $("#login").focus();
       });
   </script>
 
   <form:form action="${actionGravar}" modelAttribute="usuario">
     <form:hidden path="id"/>
-    <form:hidden path="login"/>
     <form:hidden path="senha"/>
     <div class="col-12 col-md-6 offset-md-3">
       <div class="card">
         <div class="card-body border border-primary rounded shadow-lg">
           <jsp:include page="/layouts/modal-mensagens.jsp"><jsp:param name="model" value="usuario"/></jsp:include>
-          <h3 class="card-title">Meus dados de acesso</h3>
+          <h3 class="card-title">Cadastro de Usuário</h3>
           <hr>
           <div class="form-group">
             <label>Login</label>
-            <input type="text" class="form-control" value="${usuario.login}" disabled/>
+            <form:input class="form-control" path="login"/>
           </div>
           <div class="form-group">
             <label for="txt_nova_senha">Senha</label>
@@ -56,6 +57,9 @@
           <div class="form-group">
             <label for="nome">Nome completo</label>
             <form:input class="form-control" path="nome"/>
+          </div>
+          <div class="form-check form-check-inline">
+            <form:checkboxes path="perfis" items="${listaPerfis}" cssClass="form-check-input"></form:checkboxes>
           </div>
           <p class="text-center">
             <button type="submit" class="btn btn-primary"><i class="fas fa-save"></i> Gravar</button>

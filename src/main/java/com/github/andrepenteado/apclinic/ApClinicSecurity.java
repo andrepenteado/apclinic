@@ -16,7 +16,7 @@ public class ApClinicSecurity extends WebSecurityConfigurerAdapter {
     @Autowired
     private DataSource dataSource;
 
-    private final String userQuery = "SELECT Login, Senha, 1 FROM Usuario WHERE Login = ?";
+    private final String userQuery = "SELECT Login, Senha, 1 FROM Usuario WHERE Login = ? AND (Expiracao IS NULL OR Expiracao > CURRENT_DATE)";
 
     private final String roleQuery = "SELECT u.Login, p.Perfil FROM Perfil_Usuario p, Usuario u WHERE u.Id = p.Id_Usuario AND u.Login = ?";
 

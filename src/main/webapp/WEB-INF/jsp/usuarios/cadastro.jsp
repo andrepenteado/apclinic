@@ -8,7 +8,7 @@
 <%@taglib uri="http://github.com/dandelion" prefix="dandelion"%>
 <%@taglib uri="http://www.springframework.org/tags/form" prefix="form"%>
 
-<dandelion:bundle includes="font-awesome5,jquery.validation"/>
+<dandelion:bundle includes="font-awesome5,jquery.validation,jquery.inputmask,bootstrap4.datetimepicker"/>
 
 <c:set var="actionGravar"><c:url value="/usuarios/gravar"/></c:set>
 
@@ -28,12 +28,15 @@
                   nome : { required : true }
               }
           });
+          $("#data_expiracao").datetimepicker({locale: "pt-br", format: "DD/MM/YYYY"});
+          $("#txt_data_expiracao").inputmask("99/99/9999");
           $("#login").focus();
       });
   </script>
 
   <form:form action="${actionGravar}" modelAttribute="usuario">
     <form:hidden path="id"/>
+    <form:hidden path="senha"/>
     <div class="col-12 col-md-6 offset-md-3">
       <div class="card">
         <div class="card-body border border-primary rounded shadow-lg">
@@ -57,6 +60,15 @@
             <label for="nome">Nome completo</label>
             <form:input class="form-control" path="nome"/>
           </div>
+          <div class="form-group">
+            <label for="nome">Data Expiração</label>
+            <div class="input-group date" id="data_expiracao" data-target-input="nearest">
+              <form:input class="form-control datetimepicker-input" data-target="#data_expiracao" path="expiracao"/>
+              <div class="input-group-append" data-target="#data_expiracao" data-toggle="datetimepicker">
+                <div class="input-group-text"><i class="fa fa-calendar"></i></div>
+              </div>
+            </div>
+          </div>
           <div class="form-check form-check-inline">
             <form:checkboxes path="perfis" items="${listaPerfis}" cssClass="form-check-input"></form:checkboxes>
           </div>
@@ -67,5 +79,6 @@
       </div>
     </div>
   </form:form>
+  <br/>
 </body>
 </html>

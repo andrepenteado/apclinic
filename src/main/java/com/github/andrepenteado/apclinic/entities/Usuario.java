@@ -4,8 +4,8 @@ import com.github.andrepenteado.apclinic.entities.enums.Perfil;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.ToString;
+import org.springframework.format.annotation.DateTimeFormat;
 
-import javax.persistence.CollectionTable;
 import javax.persistence.Column;
 import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
@@ -17,10 +17,9 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
-import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import javax.validation.constraints.NotBlank;
-import java.util.Collection;
+import java.time.LocalDate;
 import java.util.List;
 
 @Entity
@@ -45,6 +44,10 @@ public class Usuario {
     @NotBlank
     @Column(name = "nome")
     private String nome;
+
+    @DateTimeFormat(pattern = "dd/MM/yyyy")
+    @Column(name = "expiracao")
+    private LocalDate expiracao;
 
     @ElementCollection(targetClass = Perfil.class, fetch = FetchType.EAGER)
     @JoinTable(name = "perfil_usuario", joinColumns = @JoinColumn(name = "id_usuario"))

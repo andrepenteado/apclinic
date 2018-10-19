@@ -7,6 +7,7 @@
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@taglib prefix="dandelion" uri="http://github.com/dandelion" %>
 <%@taglib prefix="datatables" uri="http://github.com/dandelion/datatables" %>
+<%@taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 
 <dandelion:bundle includes="datatables.extended.bs4,floating.button"/>
 
@@ -26,7 +27,11 @@
   <datatables:table data="${listagemUsuarios}" row="usuario" id="GridDatatable">
     <datatables:column title="Nome" property="nome"/>
     <datatables:column title="Login" property="login"/>
-    <datatables:column title="Opções" filterable="false" searchable="false" cssCellClass="text-center" cssStyle="width: 1%">
+    <datatables:column title="Expiração" sortType="date-uk" cssCellClass="text-center">
+      <fmt:parseDate value="${usuario.expiracao}" pattern="yyyy-MM-dd" var="parsedDate" type="date" />
+      <fmt:formatDate value="${parsedDate}" type="date" pattern="dd/MM/yyyy" />
+    </datatables:column>
+    <datatables:column title="Opções" filterable="false" searchable="false" sortable="false" cssCellClass="text-center text-nowrap" cssStyle="width: 1%">
       <a href="${linkController}/editar/${usuario.id}" class="btn btn-success btn-sm" title="Editar"><i class='fas fa-pencil-alt'></i></a>
       <a href="#" class="btn btn-danger btn-sm" title="Excluir" onclick="confirmarExclusao('Deseja realmente excluir o usuário ${usuario.nome}?', '${linkController}/excluir/${usuario.id}'); return false;">
         <i class='fas fa-trash-alt'></i>

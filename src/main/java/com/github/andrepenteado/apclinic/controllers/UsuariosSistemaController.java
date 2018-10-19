@@ -21,6 +21,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 @Controller
 @Slf4j
@@ -81,5 +82,19 @@ public class UsuariosSistemaController {
             model.addAttribute("mensagemErro", config.getMessage("erroProcessamento", null, null));
         }
         return cadastroUsuario(model);
+    }
+
+    @RequestMapping("/excluir/{id}")
+    public String excluirUsuario(RedirectAttributes ra, @PathVariable Long id) {
+        try {
+            usuarioRepository.deleteById(id);
+            log.info("Usuário id #" + id + " excluído com sucesso");
+            ra.addFlashAttribute("mensagemInfo", config.getMessage("excluidoSucesso", new Object[] { "o usuário" }, null));
+        }
+        catch (Exception ex) {
+            log.error("Erro de processamento", ex);
+            ra.addFlashAttribute("mensagemErro", config.getMessage("erroProcessamento", null, null));
+        }
+        return "redirect:/usuarios";
     }
 }

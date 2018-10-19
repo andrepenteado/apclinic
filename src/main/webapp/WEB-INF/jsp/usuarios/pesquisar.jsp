@@ -21,6 +21,7 @@
 <body>
 
   <%@include file="/layouts/modal-confirmacoes.jsp"%>
+  <%@include file="/layouts/modal-mensagens.jsp"%>
 
   <a href="${linkController}/incluir" class="float-button"><span class="fas fa-plus fa-lg"></span></a>
 
